@@ -1,0 +1,34 @@
+from django.db import models
+
+
+class Depart(models.Model):
+    title = models.CharField(verbose_name="部门", max_length=32)
+    order = models.IntegerField(verbose_name="顺序")
+    count = models.IntegerField(verbose_name="人数")
+
+
+class Tag(models.Model):
+    caption = models.CharField(verbose_name="标签", max_length=32)
+
+
+class UserInfo(models.Model):
+    name = models.CharField(verbose_name="姓名", max_length=32)
+    age = models.IntegerField(verbose_name="年龄")
+
+    gender = models.SmallIntegerField(verbose_name="性别", choices=((1, "男"), (2, "女")))
+
+    # depart_id
+    depart = models.ForeignKey(verbose_name="部门", to="Depart", on_delete=models.CASCADE)
+
+    ctime = models.DateTimeField(verbose_name="时间", auto_now_add=True)
+
+    tags = models.ManyToManyField(verbose_name="标签", to="Tag")
+
+
+class NbUserInfo(models.Model):
+    name = models.CharField(verbose_name="姓名", max_length=32)
+    age = models.IntegerField(verbose_name="年龄")
+
+    gender_choices = ((1, "男"), (2, "女"))
+    gender = models.SmallIntegerField(verbose_name="性别", choices=gender_choices)
+
